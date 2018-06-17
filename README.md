@@ -1,16 +1,11 @@
 # Luky
 Luky - Module for easy tests in Python
 
-## Installation
-
-Just run the install script.
-
-It will clone the git and create an alias for ``luki``
 
 ## How it works ?
 
 You have a test file for your Python project, with your test functions (no parameter)
-If you write ``#[test]`` before your function, and then run ``luky your_test_file.py``,
+If you write ``#[test]`` before your function, and then run ``./luky.py your_test_file.py``,
 it will run your test function and print if it passed the test (complete its run) or if it failed.
 
 Luky can take several Python files as input and can show the time of each test if you put the ``--time`` or the ``-t`` flag.
@@ -29,7 +24,7 @@ def stupid_test():
 def test_add():
     assert 1 + 1 == 2
 ```
-Then we run ``luky my_tests.py``
+Then we run ``./luky.py my_tests.py``
 
 An we get :
 
