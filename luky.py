@@ -99,13 +99,14 @@ def write_test_file(path, outfile, show_time):
     functions_names = get_test_functions_names(path)
     line = "from {} import ".format(path[:-3])
     size = len(functions_names)
-    for i in range(size - 1):
-        line += "{}, ".format(functions_names[i])
-    line += "{}\n".format(functions_names[size - 1])
-    outfile.write(line)
+    if size > 0:
+        for i in range(size - 1):
+            line += "{}, ".format(functions_names[i])
+        line += "{}\n".format(functions_names[size - 1])
+        outfile.write(line)
 
-    for function in functions_names:
-        outfile.write("Test({0}, \"{0}\", {1})\n".format(function, show_time))
+        for function in functions_names:
+            outfile.write("Test({0}, \"{0}\", {1})\n".format(function, show_time))
 
 
 def get_name(line):
