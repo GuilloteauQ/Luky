@@ -1,0 +1,4 @@
+#!/bin/bash
+
+git clone https://github.com/GuilloteauQ/Luky ~/.Luky
+echo "alias luky=\"python3 ~/.Luky/luky\"" >> ~/.bashrc 
