@@ -108,7 +108,6 @@ def write_test_file(path, outfile, show_time):
         for function in functions_names:
             outfile.write("Test({0}, \"{0}\", {1})\n".format(function, show_time))
 
-
 def get_name(line):
     """
     Get the fonction name from a line like :
@@ -141,7 +140,6 @@ def main():
     Main function
     """
     if len(sys.argv) == 1:
-        print(sys.argv)
         raise "Bad Argument"
     else:
         show_time = False
