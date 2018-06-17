@@ -37,3 +37,5 @@ An we get :
 ## Limits
 
 Works only in Python3 and on Linux/MacOS.
+
+Should work in most of the terminals (because of the colors)
