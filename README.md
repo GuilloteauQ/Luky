@@ -19,6 +19,9 @@ Luky can take several Python files as input and can show the time of each test i
 #[test]
 def stupid_test():
     assert 10 < 1
+
+def untested_test():
+     assert 1 == 1
     
 #[test]
 def test_add():
