@@ -29,7 +29,7 @@ def test_add():
 ```
 Then we run ``./luky.py my_tests.py``
 
-An we get :
+And we get :
 
 ```python
 ---------- my_tests.py ----------
