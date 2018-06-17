@@ -4,7 +4,7 @@ Luky - Module for easy tests in Python
 ## How it works ?
 
 You have a test file for your Python project, with your test functions (no parameters)
-If you write ``#[test]`` before your function, and then run ``./luky.py your_test_file.py``,
+If you write ``#[test]`` before your function, and then run ``./luky your_test_file.py``,
 it will run your test function and print if it passed the test.
 
 Luky can take several Python files as input and can show the time of each test if you put the ``--time`` or the ``-t`` flag.
@@ -23,7 +23,7 @@ def stupid_test():
 def test_add():
     assert 1 + 1 == 2
 ```
-Then we run ``./luky.py my_tests.py``
+Then we run ``./luky my_tests.py``
 
 An we get :
 
