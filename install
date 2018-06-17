@@ -1,4 +1,0 @@
-#!/bin/bash
-
-git clone https://github.com/GuilloteauQ/Luky ~/.Luky
-echo "alias luky=\"bash ~/.Luky/luky\"" >> ~/.bashrc 
