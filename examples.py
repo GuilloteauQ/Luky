@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-from tests import Test
 from random import randint
 
 #[test]
@@ -31,7 +30,3 @@ def test_fibo():
         f1, f2 = f2, f1 + f2
     assert f2 == 81055900096023504197206408605
 
-# Test(test1, "Test1")
-# Test(test_sum_int, "Sum of intergers")
-# Test(test_sort, "Test sort", True)
-# Test(test_fibo, "Test Fibonnaci")
