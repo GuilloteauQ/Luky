@@ -10,7 +10,7 @@ it will run your test function and print if it passed the test (complete its run
 
 Luky can take several Python files as input and can show the time of each test if you put the ``--time`` or the ``-t`` tags.
 
-It also display colors in the terminal by default. But if your terminal does not support colors, you can disable this with the
+It also displays colors in the terminal by default. But if your terminal does not support colors, you can disable this with the
 ``--no-color`` tag.
 
 There is an help that you can see with the ``--help`` or ``-h`` tags.
@@ -47,3 +47,13 @@ Tests passed : 1 / 2
 ## Limits
 
 Works only in Python3 and on Linux (maybe MacOS).
+
+## TODO
+
+* Put the lib in pip
+* Create a nice exec file (like valgrind)
+
+## Motivation
+
+I've played a bit with [Rust](http://www.rust-lang.org) and with Cargo. A cool feature of the compiler is the test option. You can write tests function within your programm with the test macro, and they will not be executed during a standart run (``cargo run``), but only with a 'test run'(``cargo test``). 
+I found this pretty cool, and then tried to do kind of the same in Python.
