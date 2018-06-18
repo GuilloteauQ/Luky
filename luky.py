@@ -10,9 +10,9 @@ from subprocess import call
 # Test Class
 #
 
-class SubTest:
+class Test:
     """
-    Class SubTest {
+    Class Test {
 
         function: function to execute
             can contain assert,
@@ -27,11 +27,12 @@ class SubTest:
     }
     """
 
-    def __init__(self, function, name, show_time):
+    def __init__(self, function, name, show_time, show_color):
         self.function = function
         self.name = name
         self.result = None
         self.show_time = show_time
+        self.show_color = show_color
 
 
     def run(self):
@@ -52,47 +53,38 @@ class SubTest:
         time_before = time.time()
         self.run()
         time_after = time.time()
-        if self.result:
-            if self.show_time:
-                print("[\033[32mpassed\033[39m] : {} ({} sec)"\
-                  .format(self.name, time_after - time_before))
+        output = "["
+        if self.show_color:
+            if self.result:
+                output += "\033[32mpassed\033[39m] : {}".format(self.name)
             else:
-                print("[\033[32mpassed\033[39m] : {}".format(self.name))
+                output += "\033[31mfailed\033[39m] : {}".format(self.name)
         else:
-            if self.show_time:
-                print("[\033[31mfailed\033[39m] : {} ({} sec)"\
-                  .format(self.name, time_after - time_before))
+            if self.result:
+                output += "passed] : {}".format(self.name)
             else:
-                print("[\033[31mfailed\033[39m] : {}".format(self.name))
+                output += "failed] : {}".format(self.name)
+        if self.show_time:
+            output += " ({} sec)".format(time_after - time_before)
 
-class Test:
-    # This is a class created only to make it easy to call
-    """
-    Class Test
-        To test the function "fct":
-            Test(fct, "Test of fct")
-    """
-    def __init__(self, function, name, show_time=False):
-        SubTest(function, name, show_time).report()
-
+        print(output)
+        return self.result
 
 # ####################################################
 # Parser Part
 #
 
-def write_header():
+def write_header(outfile):
     """
     Erase the ex .out.py and write:
         #!/usr/bin/env python3
         from luky import Test
     """
-    outfile = open(".out.py", "w")
     outfile.write("#!/usr/bin/env python3\n")
     outfile.write("from luky import Test\n")
-    outfile.close()
 
 
-def write_test_file(path, outfile, show_time):
+def write_test_file(path, outfile, show_time, hide_color):
     """
     Write the import for the test file and the lines of the tests
     """
@@ -105,8 +97,12 @@ def write_test_file(path, outfile, show_time):
         line += "{}\n".format(functions_names[size - 1])
         outfile.write(line)
 
+        outfile.write("tests_passed = 0\n")
+
         for function in functions_names:
-            outfile.write("Test({0}, \"{0}\", {1})\n".format(function, show_time))
+            outfile.write("tests_passed += Test({0}, \"{0}\", {1}, {2}).report()\n"\
+                          .format(function, show_time, not hide_color))
+        outfile.write("print(\"Tests passed:\", tests_passed, \"/ {}\")\n".format(size))
 
 def get_name(line):
     """
@@ -135,6 +131,19 @@ def get_test_functions_names(path):
     test_file.close()
     return functions_names
 
+def display_help():
+    """
+    Displays the help for Luky
+    """
+    print("######################## LUKY ########################\n")
+    print("Usage:")
+    print("\t ./luky.py tests_file.py other_tests_file.py\n")
+    print("Arguments:")
+    print("-t or --time: Displays the execution time of each test")
+    print("--no-color: Do not show 'passed' and 'failed' in color")
+    print("-h or --help: Displays this help\n\n")
+
+
 def main():
     """
     Main function
@@ -143,22 +152,33 @@ def main():
         raise "Bad Argument"
     else:
         show_time = False
+        hide_color = False
+        show_help = False
         paths = sys.argv[1:] # We get all the arguments
         for path in paths:
             # Checking if the files are Python files
             if path == "--time" or path == "-t":
                 show_time = True
+            elif path == "--no-color":
+                hide_color = True
+            elif path == "-h" or path == "--help":
+                show_help = True
             elif len(path) <= 3 or path[-3:] != ".py":
                 raise "Bad Argument"
-    write_header()
+    if show_help:
+        display_help()
     outfile = open(".out.py", "a")
+    write_header(outfile)
     for path in paths:
-        if path != "-t" and path != "--time":
+        if path not in ["-t", "--time", "--no-color", "-h", "--help"]:
             outfile.write("print(\"---------- {} ----------\")\n".format(path))
-            write_test_file(path, outfile, show_time)
+            write_test_file(path, outfile, show_time, hide_color)
 
     outfile.close()
+    # Run the file
     call(["python3", ".out.py"])
+    # Delete the file
+    call(["rm", ".out.py"])
 
 if __name__ == "__main__":
     main()
