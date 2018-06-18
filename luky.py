@@ -77,11 +77,11 @@ class Test:
 def write_header(outfile):
     """
     Erase the ex .out.py and write:
-        #!/usr/bin/env python3
-        from luky import Test
+        #!/usr/bin/env python3.5
+        from Luky import luky
     """
-    outfile.write("#!/usr/bin/env python3\n")
-    outfile.write("from luky import Test\n")
+    outfile.write("#!/usr/bin/env python3.5\n")
+    outfile.write("from Luky import luky\n")
 
 
 def write_test_file(path, outfile, show_time, hide_color):
@@ -100,7 +100,7 @@ def write_test_file(path, outfile, show_time, hide_color):
         outfile.write("tests_passed = 0\n")
 
         for function in functions_names:
-            outfile.write("tests_passed += Test({0}, \"{0}\", {1}, {2}).report()\n"\
+            outfile.write("tests_passed += luky.Test({0}, \"{0}\", {1}, {2}).report()\n"\
                           .format(function, show_time, not hide_color))
         outfile.write("print(\"Tests passed:\", tests_passed, \"/ {}\")\n".format(size))
 
