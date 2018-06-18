@@ -55,5 +55,5 @@ Works only in Python3 and on Linux (maybe MacOS).
 
 ## Motivation
 
-I've played a bit with [Rust](http://www.rust-lang.org) and with Cargo. A cool feature of the compiler is the test option. You can write tests function within your programm with the test macro, and they will not be executed during a standart run (``cargo run``), but only with a 'test run'(``cargo test``). 
+I've played a bit with [Rust](http://www.rust-lang.org) and with Cargo. A cool feature of the compiler is the test run. You can write tests functions within your program with the test macro, and they will not be executed during a standart run (``cargo run``), but only with a 'test run'(``cargo test``). 
 I found this pretty cool, and then tried to do kind of the same in Python.
