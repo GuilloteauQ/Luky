@@ -51,7 +51,7 @@ Tests passed : 1 / 2
 
 ## Limits
 
-Works only in Python3 and on Linux (maybe MacOS).
+Works only in Python3 (Python2 incoming..) and on Linux (maybe MacOS).
 
 We can not run something like ``luky ../my_tests.py``
 
