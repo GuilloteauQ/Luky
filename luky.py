@@ -149,7 +149,9 @@ def main():
     Main function
     """
     if len(sys.argv) == 1:
-        raise "Bad Argument"
+        print("Bad Argument\n")
+        display_help()
+        return
     else:
         show_time = False
         hide_color = False
@@ -164,7 +166,9 @@ def main():
             elif path == "-h" or path == "--help":
                 show_help = True
             elif len(path) <= 3 or path[-3:] != ".py":
-                raise "Bad Argument"
+                print("Bad Argument: The file must end by '.py'")
+                print("Run with -h or --help to see the help")
+                return
     if show_help:
         display_help()
     outfile = open(".out.py", "a")
