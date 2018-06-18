@@ -8,7 +8,12 @@ You have a test file for your Python project, with your test functions (no param
 If you write ``#[test]`` before your function, and then run ``./luky.py your_test_file.py``,
 it will run your test function and print if it passed the test (complete its run) or if it failed.
 
-Luky can take several Python files as input and can show the time of each test if you put the ``--time`` or the ``-t`` flag.
+Luky can take several Python files as input and can show the time of each test if you put the ``--time`` or the ``-t`` tags.
+
+It also display colors in the terminal by default. But if your terminal does not support colors, you can disable this with the
+``--no-color`` tag.
+
+There is an help that you can see with the ``--help`` or ``-h`` tags.
 
 ## Example
 
@@ -40,6 +45,4 @@ And we get :
 
 ## Limits
 
-Works only in Python3 and on Linux/MacOS.
-
-Should work in most of the terminals (because of the colors)
+Works only in Python3 and on Linux (maybe MacOS).
