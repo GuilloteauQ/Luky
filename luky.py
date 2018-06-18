@@ -121,7 +121,7 @@ def get_test_functions_names(path):
     lines = test_file.readlines()
     i = 0
     while i < len(lines):
-        if lines[i] == "#[test]\n":
+        if lines[i][:7] == "#[test]":
             i += 1
             while i < len(lines) and lines[i][:3] != "def":
                 i += 1
