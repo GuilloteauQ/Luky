@@ -1,5 +1,5 @@
 # Luky
-Luky - Module for easy tests in Python
+Luky - Module for easy (Rust/Cargo like) tests in Python
 
 
 ## How it works ?
@@ -40,6 +40,7 @@ And we get :
 ---------- my_tests.py ----------
 [failed] : stupid_test
 [passed] : test_add
+Tests passed : 1 / 2
 ```
 (The ``passed`` and ``failed`` are in green and red, but i couldn't figure out how to put color ...)
 
