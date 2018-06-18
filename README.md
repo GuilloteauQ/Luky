@@ -1,11 +1,16 @@
 # Luky
 Luky - Module for easy (Rust/Cargo like) tests in Python
 
+## Installation
+
+You just have to run the ``install`` shell script.
+
+It will install the ``Luky`` module from ``pip``, clone this git and create an alias for an easy use of ``luky``.
 
 ## How it works ?
 
 You have a test file for your Python project, with your test functions (no parameter)
-If you write ``#[test]`` before your function, and then run ``./luky.py your_test_file.py``,
+If you write ``#[test]`` before your function, and then run ``luky your_test_file.py``,
 it will run your test function and print if it passed the test (complete its run) or if it failed.
 
 Luky can take several Python files as input and can show the time of each test if you put the ``--time`` or the ``-t`` tags.
@@ -32,7 +37,7 @@ def untested_test():
 def test_add():
     assert 1 + 1 == 2
 ```
-Then we run ``./luky.py my_tests.py``
+Then we run ``luky my_tests.py``
 
 And we get :
 
@@ -47,11 +52,6 @@ Tests passed : 1 / 2
 ## Limits
 
 Works only in Python3 and on Linux (maybe MacOS).
-
-## TODO
-
-* Put the lib in pip
-* Create a nice exec file (like valgrind)
 
 ## Motivation
 
