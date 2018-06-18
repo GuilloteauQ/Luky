@@ -3,6 +3,8 @@ Luky - Module for easy (Rust/Cargo like) tests in Python
 
 ## Installation
 
+You need ``pip`` for Python3.
+
 You just have to run the ``install`` shell script.
 
 It will install the ``Luky`` module from ``pip``, clone this git and create an alias for an easy use of ``luky``.
