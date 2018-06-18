@@ -183,6 +183,7 @@ def main():
     call(["python3", ".out.py"])
     # Delete the file
     call(["rm", ".out.py"])
+    call(["rm", "-rf", "__pycache__"])
 
 if __name__ == "__main__":
     main()
