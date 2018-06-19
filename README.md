@@ -15,7 +15,7 @@ It will install the ``Luky`` module from ``pip``, clone this git and create an a
 
 You just have to run the ``install`` shell script.
 
-It will clone this git and create an alias for an east use of ``luky`` from everywhere.
+It will clone this git and create an alias for an easy use of ``luky`` from everywhere.
 
 ### Why diffrent installations ?
 
