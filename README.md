@@ -19,8 +19,8 @@ It will clone this git and create an alias for an easy use of ``luky`` from ever
 
 ### Why diffrent installations ?
 
-Well, ``luky`` need the code in the lib to work. So, I did the ``pip`` install first, but it (or ``pip``) had some problems to import the lib (sometimes it imported it on 
-Python2). So I decided to do something silly. I created a bash script that contained the lib code and generate a ``luky.py`` that can be called easyly without having the lib installed with ``pip`` (since it's in the same directory).
+Well, ``luky`` needs the code in the lib to work. So, I did the ``pip`` install first, but it (or ``pip``) had some problems to import the lib (sometimes it imported it on 
+Python2). So I decided to do something silly. I created a bash script that contained the lib code and generate a ``luky.py`` file  that can be called easily without having the lib installed with ``pip`` (since it's in the same directory that the test file).
 
 ## How it works ?
 
