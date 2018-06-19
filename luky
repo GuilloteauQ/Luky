@@ -1,282 +1,143 @@
 #!/bin/bash
 echo "#!/usr/bin/env python3" > luky.py
-echo "import sys
-" >> luky.py
-echo "import time
-" >> luky.py
-echo "from subprocess import call
-" >> luky.py
-echo "
-" >> luky.py
-echo "# ####################################################
-" >> luky.py
-echo "# Test Class
-" >> luky.py
-echo "#
-" >> luky.py
-echo "
-" >> luky.py
-echo "class Test:
-" >> luky.py
-echo "    def __init__(self, function, name, show_time, show_color):
-" >> luky.py
-echo "        self.function = function
-" >> luky.py
-echo "        self.name = name
-" >> luky.py
-echo "        self.result = None
-" >> luky.py
-echo "        self.show_time = show_time
-" >> luky.py
-echo "        self.show_color = show_color
-" >> luky.py
-echo "
-" >> luky.py
-echo "
-" >> luky.py
-echo "    def run(self):
-" >> luky.py
-echo "        try:
-" >> luky.py
-echo "            self.function()
-" >> luky.py
-echo "            self.result = True
-" >> luky.py
-echo "        except:
-" >> luky.py
-echo "            self.result = False
-" >> luky.py
-echo "    
-" >> luky.py
-echo "    def report(self):
-" >> luky.py
-echo "        time_before = time.time()
-" >> luky.py
-echo "        self.run()
-" >> luky.py
-echo "        time_after = time.time()
-" >> luky.py
-echo "        if self.show_color:
-" >> luky.py
-echo "            if self.result:
-" >> luky.py
-echo "                output = \"[\033[32mpassed\033[39m] : {}\".format(self.name)
-" >> luky.py
-echo "            else:
-" >> luky.py
-echo "                output = \"[\033[31mfailed\033[39m] : {}\".format(self.name)
-" >> luky.py
-echo "        else:
-" >> luky.py
-echo "            if self.result:
-" >> luky.py
-echo "                output = \"[passed] : {}\".format(self.name)
-" >> luky.py
-echo "            else:
-" >> luky.py
-echo "                output = \"[failed] : {}\".format(self.name)
-" >> luky.py
-echo "        if self.show_time:
-" >> luky.py
-echo "            output += \" ({} sec)\".format(time_after - time_before)
-" >> luky.py
-echo "
-" >> luky.py
-echo "        print(output)
-" >> luky.py
-echo "        return self.result
-" >> luky.py
-echo "
-" >> luky.py
-echo "# ####################################################
-" >> luky.py
-echo "# Parser Part
-" >> luky.py
-echo "#
-" >> luky.py
-echo "
-" >> luky.py
-echo "def write_header(outfile):
-" >> luky.py
-echo "    outfile.write(\"#!/usr/bin/env python3.5\n\")
-" >> luky.py
-echo "    outfile.write(\"import luky\n\")
-" >> luky.py
-echo "
-" >> luky.py
-echo "
-" >> luky.py
-echo "def write_test_file(path, outfile, show_time, hide_color):
-" >> luky.py
-echo "    functions_names = get_test_functions_names(path)
-" >> luky.py
-echo "    line = \"from {} import \".format(path[:-3])
-" >> luky.py
-echo "    size = len(functions_names)
-" >> luky.py
-echo "    if size > 0:
-" >> luky.py
-echo "        for i in range(size - 1):
-" >> luky.py
-echo "            line += \"{}, \".format(functions_names[i])
-" >> luky.py
-echo "        line += \"{}\n\".format(functions_names[size - 1])
-" >> luky.py
-echo "        outfile.write(line)
-" >> luky.py
-echo "
-" >> luky.py
-echo "        outfile.write(\"tests_passed = 0\n\")
-" >> luky.py
-echo "
-" >> luky.py
-echo "        for function in functions_names:
-" >> luky.py
-echo "            outfile.write(\"tests_passed += luky.Test({0}, \\\"{0}\\\", {1}, {2}).report()\n\"\
-" >> luky.py
-echo "                          .format(function, show_time, not hide_color))
-" >> luky.py
-echo "        outfile.write(\"print(\\\"Tests passed:\\\", tests_passed, \\\"/ {}\\\")\n\".format(size))
-" >> luky.py
-echo "
-" >> luky.py
-echo "def get_name(line):
-" >> luky.py
-echo "    return line[4:-4]
-" >> luky.py
-echo "
-" >> luky.py
-echo "def get_test_functions_names(path):
-" >> luky.py
-echo "    functions_names = []
-" >> luky.py
-echo "    test_file = open(path, \"r\")
-" >> luky.py
-echo "    lines = test_file.readlines()
-" >> luky.py
-echo "    i = 0
-" >> luky.py
-echo "    while i < len(lines):
-" >> luky.py
-echo "        if lines[i][:7] == \"#[test]\":
-" >> luky.py
-echo "            i += 1
-" >> luky.py
-echo "            while i < len(lines) and lines[i][:3] != \"def\":
-" >> luky.py
-echo "                i += 1
-" >> luky.py
-echo "            if i != len(lines) and lines[i][:3] == \"def\":
-" >> luky.py
-echo "                functions_names.append(get_name(lines[i]))
-" >> luky.py
-echo "        i += 1
-" >> luky.py
-echo "    test_file.close()
-" >> luky.py
-echo "    return functions_names
-" >> luky.py
-echo "
-" >> luky.py
-echo "def display_help():
-" >> luky.py
-echo "    print(\"######################## LUKY ########################\n\")
-" >> luky.py
-echo "    print(\"Usage:\")
-" >> luky.py
-echo "    print(\"\t ./luky.py tests_file.py other_tests_file.py\n\")
-" >> luky.py
-echo "    print(\"Arguments:\")
-" >> luky.py
-echo "    print(\"-t or --time: Displays the execution time of each test\")
-" >> luky.py
-echo "    print(\"--no-color: Do not show 'passed' and 'failed' in color\")
-" >> luky.py
-echo "    print(\"-h or --help: Displays this help\n\n\")
-" >> luky.py
-echo "
-" >> luky.py
-echo "
-" >> luky.py
-echo "def main():
-" >> luky.py
-echo "    if len(sys.argv) == 1:
-" >> luky.py
-echo "        print(\"Bad Argument\n\")
-" >> luky.py
-echo "        display_help()
-" >> luky.py
-echo "        return
-" >> luky.py
-echo "    else:
-" >> luky.py
-echo "        show_time = False
-" >> luky.py
-echo "        hide_color = False
-" >> luky.py
-echo "        show_help = False
-" >> luky.py
-echo "        paths = sys.argv[1:] # We get all the arguments
-" >> luky.py
-echo "        for path in paths:
-" >> luky.py
-echo "            # Checking if the files are Python files
-" >> luky.py
-echo "            if path == \"--time\" or path == \"-t\":
-" >> luky.py
-echo "                show_time = True
-" >> luky.py
-echo "            elif path == \"--no-color\":
-" >> luky.py
-echo "                hide_color = True
-" >> luky.py
-echo "            elif path == \"-h\" or path == \"--help\":
-" >> luky.py
-echo "                show_help = True
-" >> luky.py
-echo "            elif len(path) <= 3 or path[-3:] != \".py\":
-" >> luky.py
-echo "                print(\"Bad Argument: The file must end by '.py'\")
-" >> luky.py
-echo "                print(\"Run with -h or --help to see the help\")
-" >> luky.py
-echo "                return
-" >> luky.py
-echo "    if show_help:
-" >> luky.py
-echo "        display_help()
-" >> luky.py
-echo "    outfile = open(\".out.py\", \"a\")
-" >> luky.py
-echo "    write_header(outfile)
-" >> luky.py
-echo "    for path in paths:
-" >> luky.py
-echo "        if path not in [\"-t\", \"--time\", \"--no-color\", \"-h\", \"--help\"]:
-" >> luky.py
-echo "            outfile.write(\"print(\\\"---------- {} ----------\\\")\n\".format(path))
-" >> luky.py
-echo "            write_test_file(path, outfile, show_time, hide_color)
-" >> luky.py
-echo "
-" >> luky.py
-echo "    outfile.close()
-" >> luky.py
-echo "    # Run the file
-" >> luky.py
-echo "    call([\"python3\", \".out.py\"])
-" >> luky.py
-echo "    # Delete the file
-" >> luky.py
-echo "    call([\"rm\", \".out.py\"])
-" >> luky.py
-echo "    call([\"rm\", \"-rf\", \"__pycache__\"])
-" >> luky.py
-echo "
-" >> luky.py
-echo "if __name__ == \"__main__\":
-" >> luky.py
-echo "    main()
-" >> luky.py
+echo "import sys" >> luky.py
+echo "import time" >> luky.py
+echo "from subprocess import call" >> luky.py
+echo "" >> luky.py
+echo "# ####################################################" >> luky.py
+echo "# Test Class" >> luky.py
+echo "#" >> luky.py
+echo "" >> luky.py
+echo "class Test:" >> luky.py
+echo "    def __init__(self, function, name, show_time, show_color):" >> luky.py
+echo "        self.function = function" >> luky.py
+echo "        self.name = name" >> luky.py
+echo "        self.result = None" >> luky.py
+echo "        self.show_time = show_time" >> luky.py
+echo "        self.show_color = show_color" >> luky.py
+echo "" >> luky.py
+echo "" >> luky.py
+echo "    def run(self):" >> luky.py
+echo "        try:" >> luky.py
+echo "            self.function()" >> luky.py
+echo "            self.result = True" >> luky.py
+echo "        except:" >> luky.py
+echo "            self.result = False" >> luky.py
+echo "    " >> luky.py
+echo "    def report(self):" >> luky.py
+echo "        time_before = time.time()" >> luky.py
+echo "        self.run()" >> luky.py
+echo "        time_after = time.time()" >> luky.py
+echo "        if self.show_color:" >> luky.py
+echo "            if self.result:" >> luky.py
+echo "                output = \"[\033[32mpassed\033[39m] : {}\".format(self.name)" >> luky.py
+echo "            else:" >> luky.py
+echo "                output = \"[\033[31mfailed\033[39m] : {}\".format(self.name)" >> luky.py
+echo "        else:" >> luky.py
+echo "            if self.result:" >> luky.py
+echo "                output = \"[passed] : {}\".format(self.name)" >> luky.py
+echo "            else:" >> luky.py
+echo "                output = \"[failed] : {}\".format(self.name)" >> luky.py
+echo "        if self.show_time:" >> luky.py
+echo "            output += \" ({} sec)\".format(time_after - time_before)" >> luky.py
+echo "" >> luky.py
+echo "        print(output)" >> luky.py
+echo "        return self.result" >> luky.py
+echo "" >> luky.py
+echo "# ####################################################" >> luky.py
+echo "# Parser Part" >> luky.py
+echo "#" >> luky.py
+echo "" >> luky.py
+echo "def write_header(outfile):" >> luky.py
+echo "    outfile.write(\"#!/usr/bin/env python3.5\n\")" >> luky.py
+echo "    outfile.write(\"import luky\n\")" >> luky.py
+echo "" >> luky.py
+echo "" >> luky.py
+echo "def write_test_file(path, outfile, show_time, hide_color):" >> luky.py
+echo "    functions_names = get_test_functions_names(path)" >> luky.py
+echo "    line = \"from {} import \".format(path[:-3])" >> luky.py
+echo "    size = len(functions_names)" >> luky.py
+echo "    if size > 0:" >> luky.py
+echo "        for i in range(size - 1):" >> luky.py
+echo "            line += \"{}, \".format(functions_names[i])" >> luky.py
+echo "        line += \"{}\n\".format(functions_names[size - 1])" >> luky.py
+echo "        outfile.write(line)" >> luky.py
+echo "" >> luky.py
+echo "        outfile.write(\"tests_passed = 0\n\")" >> luky.py
+echo "" >> luky.py
+echo "        for function in functions_names:" >> luky.py
+echo "            outfile.write(\"tests_passed += luky.Test({0}, \\\"{0}\\\", {1}, {2}).report()\n\" " >> luky.py
+echo "                          .format(function, show_time, not hide_color))" >> luky.py
+echo "        outfile.write(\"print(\\\"Tests passed:\\\", tests_passed, \\\"/ {}\\\")\n\".format(size))" >> luky.py
+echo "" >> luky.py
+echo "def get_name(line):" >> luky.py
+echo "    return line[4:-4]" >> luky.py
+echo "" >> luky.py
+echo "def get_test_functions_names(path):" >> luky.py
+echo "    functions_names = []" >> luky.py
+echo "    test_file = open(path, \"r\")" >> luky.py
+echo "    lines = test_file.readlines()" >> luky.py
+echo "    i = 0" >> luky.py
+echo "    while i < len(lines):" >> luky.py
+echo "        if lines[i][:7] == \"#[test]\":" >> luky.py
+echo "            i += 1" >> luky.py
+echo "            while i < len(lines) and lines[i][:3] != \"def\":" >> luky.py
+echo "                i += 1" >> luky.py
+echo "            if i != len(lines) and lines[i][:3] == \"def\":" >> luky.py
+echo "                functions_names.append(get_name(lines[i]))" >> luky.py
+echo "        i += 1" >> luky.py
+echo "    test_file.close()" >> luky.py
+echo "    return functions_names" >> luky.py
+echo "" >> luky.py
+echo "def display_help():" >> luky.py
+echo "    print(\"######################## LUKY ########################\n\")" >> luky.py
+echo "    print(\"Usage:\")" >> luky.py
+echo "    print(\"\t ./luky.py tests_file.py other_tests_file.py\n\")" >> luky.py
+echo "    print(\"Arguments:\")" >> luky.py
+echo "    print(\"-t or --time: Displays the execution time of each test\")" >> luky.py
+echo "    print(\"--no-color: Do not show 'passed' and 'failed' in color\")" >> luky.py
+echo "    print(\"-h or --help: Displays this help\n\n\")" >> luky.py
+echo "" >> luky.py
+echo "" >> luky.py
+echo "def main():" >> luky.py
+echo "    if len(sys.argv) == 1:" >> luky.py
+echo "        print(\"Bad Argument\n\")" >> luky.py
+echo "        display_help()" >> luky.py
+echo "        return" >> luky.py
+echo "    else:" >> luky.py
+echo "        show_time = False" >> luky.py
+echo "        hide_color = False" >> luky.py
+echo "        show_help = False" >> luky.py
+echo "        paths = sys.argv[1:] # We get all the arguments" >> luky.py
+echo "        for path in paths:" >> luky.py
+echo "            # Checking if the files are Python files" >> luky.py
+echo "            if path == \"--time\" or path == \"-t\":" >> luky.py
+echo "                show_time = True" >> luky.py
+echo "            elif path == \"--no-color\":" >> luky.py
+echo "                hide_color = True" >> luky.py
+echo "            elif path == \"-h\" or path == \"--help\":" >> luky.py
+echo "                show_help = True" >> luky.py
+echo "            elif len(path) <= 3 or path[-3:] != \".py\":" >> luky.py
+echo "                print(\"Bad Argument: The file must end by '.py'\")" >> luky.py
+echo "                print(\"Run with -h or --help to see the help\")" >> luky.py
+echo "                return" >> luky.py
+echo "    if show_help:" >> luky.py
+echo "        display_help()" >> luky.py
+echo "    outfile = open(\".out.py\", \"a\")" >> luky.py
+echo "    write_header(outfile)" >> luky.py
+echo "    for path in paths:" >> luky.py
+echo "        if path not in [\"-t\", \"--time\", \"--no-color\", \"-h\", \"--help\"]:" >> luky.py
+echo "            outfile.write(\"print(\\\"---------- {} ----------\\\")\n\".format(path))" >> luky.py
+echo "            write_test_file(path, outfile, show_time, hide_color)" >> luky.py
+echo "" >> luky.py
+echo "    outfile.close()" >> luky.py
+echo "    # Run the file" >> luky.py
+echo "    call([\"python3\", \".out.py\"])" >> luky.py
+echo "    # Delete the file" >> luky.py
+echo "    call([\"rm\", \".out.py\"])" >> luky.py
+echo "    call([\"rm\", \"-rf\", \"__pycache__\"])" >> luky.py
+echo "" >> luky.py
+echo "if __name__ == \"__main__\":" >> luky.py
+echo "    main()" >> luky.py
 python3 luky.py $@
 rm luky.py
