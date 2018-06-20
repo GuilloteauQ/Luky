@@ -3,11 +3,6 @@ echo "#!/usr/bin/env python3" > luky.py
 echo "import sys" >> luky.py
 echo "import time" >> luky.py
 echo "from subprocess import call" >> luky.py
-echo "" >> luky.py
-echo "# ####################################################" >> luky.py
-echo "# Test Class" >> luky.py
-echo "#" >> luky.py
-echo "" >> luky.py
 echo "class Test:" >> luky.py
 echo "    def __init__(self, function, name, show_time, show_color):" >> luky.py
 echo "        self.function = function" >> luky.py
@@ -15,7 +10,6 @@ echo "        self.name = name" >> luky.py
 echo "        self.result = None" >> luky.py
 echo "        self.show_time = show_time" >> luky.py
 echo "        self.show_color = show_color" >> luky.py
-echo "" >> luky.py
 echo "" >> luky.py
 echo "    def run(self):" >> luky.py
 echo "        try:" >> luky.py
@@ -40,18 +34,12 @@ echo "            else:" >> luky.py
 echo "                output = \"[failed] : {}\".format(self.name)" >> luky.py
 echo "        if self.show_time:" >> luky.py
 echo "            output += \" ({} sec)\".format(time_after - time_before)" >> luky.py
-echo "" >> luky.py
 echo "        print(output)" >> luky.py
 echo "        return self.result" >> luky.py
-echo "" >> luky.py
-echo "# ####################################################" >> luky.py
-echo "# Parser Part" >> luky.py
-echo "#" >> luky.py
 echo "" >> luky.py
 echo "def write_header(outfile):" >> luky.py
 echo "    outfile.write(\"#!/usr/bin/env python3.5\n\")" >> luky.py
 echo "    outfile.write(\"import luky\n\")" >> luky.py
-echo "" >> luky.py
 echo "" >> luky.py
 echo "def write_test_file(path, outfile, show_time, hide_color):" >> luky.py
 echo "    functions_names = get_test_functions_names(path)" >> luky.py
@@ -62,9 +50,7 @@ echo "        for i in range(size - 1):" >> luky.py
 echo "            line += \"{}, \".format(functions_names[i])" >> luky.py
 echo "        line += \"{}\n\".format(functions_names[size - 1])" >> luky.py
 echo "        outfile.write(line)" >> luky.py
-echo "" >> luky.py
 echo "        outfile.write(\"tests_passed = 0\n\")" >> luky.py
-echo "" >> luky.py
 echo "        for function in functions_names:" >> luky.py
 echo "            outfile.write(\"tests_passed += luky.Test({0}, \\\"{0}\\\", {1}, {2}).report()\n\" " >> luky.py
 echo "                          .format(function, show_time, not hide_color))" >> luky.py
@@ -98,7 +84,6 @@ echo "    print(\"-t or --time: Displays the execution time of each test\")" >> 
 echo "    print(\"--no-color: Do not show 'passed' and 'failed' in color\")" >> luky.py
 echo "    print(\"-h or --help: Displays this help\n\n\")" >> luky.py
 echo "" >> luky.py
-echo "" >> luky.py
 echo "def main():" >> luky.py
 echo "    if len(sys.argv) == 1:" >> luky.py
 echo "        print(\"Bad Argument\n\")" >> luky.py
@@ -129,11 +114,8 @@ echo "    for path in paths:" >> luky.py
 echo "        if path not in [\"-t\", \"--time\", \"--no-color\", \"-h\", \"--help\"]:" >> luky.py
 echo "            outfile.write(\"print(\\\"---------- {} ----------\\\")\n\".format(path))" >> luky.py
 echo "            write_test_file(path, outfile, show_time, hide_color)" >> luky.py
-echo "" >> luky.py
 echo "    outfile.close()" >> luky.py
-echo "    # Run the file" >> luky.py
 echo "    call([\"python3\", \".out.py\"])" >> luky.py
-echo "    # Delete the file" >> luky.py
 echo "    call([\"rm\", \".out.py\"])" >> luky.py
 echo "    call([\"rm\", \"-rf\", \"__pycache__\"])" >> luky.py
 echo "" >> luky.py
