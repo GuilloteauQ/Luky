@@ -68,8 +68,6 @@ Tests passed : 1 / 2
 
 Works only in Python3 (Python2 incoming..) and on Linux (maybe MacOS).
 
-We can not run something like ``luky ../my_tests.py``
-
 ## Motivation
 
 I've played a bit with [Rust](http://www.rust-lang.org) and with Cargo. A cool feature of the compiler is the test run. You can write tests functions within your program with the test macro, and they will not be executed during a standart run (``cargo run``), but only with a 'test run'(``cargo test``). 
