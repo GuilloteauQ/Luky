@@ -119,13 +119,15 @@ for file in $@; do
     echo "            write_test_file(path, outfile, show_time, hide_color)" >> luky.py
     echo "    outfile.close()" >> luky.py
     echo "    call([\"python3\", \".out.py\"])" >> luky.py
-    echo "    call([\"rm\", \".out.py\"])" >> luky.py
-    echo "    call([\"rm\", \"-rf\", \"__pycache__\"])" >> luky.py
+#    echo "    call([\"rm\", \".out.py\"])" >> luky.py
+#    echo "    call([\"rm\", \"-rf\", \"__pycache__\"])" >> luky.py
     echo "" >> luky.py
     echo "if __name__ == \"__main__\":" >> luky.py
     echo "    main()" >> luky.py
     base=$(basename $file)
     python3 luky.py ${base}
+    rm .out.py
+    rm -rf __pycache__
     rm luky.py
     cd 
 done
