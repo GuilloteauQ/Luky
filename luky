@@ -1,6 +1,28 @@
 #!/bin/bash
+show_help=""
+show_time=""
+no_color=""
+
+for arg in $@; do
+    case "$arg" in
+        "--time" | "-t")
+            show_time="-t"
+            ;;
+        "--no-color")
+            no_color="--no-color"
+            ;;
+        *)
+            ;;
+    esac
+done
+
+
 for file in $@; do
-    cd $(dirname $file)
+
+    if [ "$file" != "-h" ] && [ "$file" != "--help" ] && [ "$file" != "-t" ] && [ "$file" != "--time" ] && [ "$file" != "--no-color" ]
+    then
+        cd $(dirname $file)
+    fi
 
     echo "#!/usr/bin/env python3" > luky.py
     echo "import sys" >> luky.py
@@ -124,10 +146,19 @@ for file in $@; do
     echo "" >> luky.py
     echo "if __name__ == \"__main__\":" >> luky.py
     echo "    main()" >> luky.py
-    base=$(basename $file)
-    python3 luky.py ${base}
-    rm .out.py
-    rm -rf __pycache__
+
+    if [ "$file" = "-h" ] || [ "$file" = "--help" ]
+    then
+        python3 luky.py -h
+    elif [ "$file" != "-t" ] && [ "$file" != "--time" ] && [ "$file" != "--no-color" ]
+    then
+        base=$(basename $file)
+        python3 luky.py ${base} ${show_help} ${show_time} ${no_color}
+        rm .out.py
+        rm -rf __pycache__
+
+    fi
     rm luky.py
     cd 
+
 done
