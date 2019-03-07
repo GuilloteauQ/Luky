@@ -3,10 +3,11 @@ Luky - Script for easy (Rust/Cargo like) tests in Python
 
 ## Installation
 
-You just have to run the ``install`` shell script.
+You can add this line to your ```.bashrc``` file to execute ```luky``` from everywhere:
 
-It will clone this git and create an alias for an easy use of ``luky`` from everywhere.
-
+```bash
+alias luky="python3 path/to/luky.py"
+```
 
 ## How does it work ?
 
@@ -33,7 +34,7 @@ def stupid_test():
 
 def untested_test():
      assert 1 == 1
-    
+
 #[test]
 def test_add():
     assert 1 + 1 == 2
@@ -56,5 +57,5 @@ Works only in Python3 (Python2 incoming..) and on Linux (maybe MacOS).
 
 ## Motivation
 
-I've played a bit with [Rust](http://www.rust-lang.org) and with Cargo. A cool feature of the compiler is the test run. You can write tests functions within your program with the test macro, and they will not be executed during a standart run (``cargo run``), but only with a 'test run'(``cargo test``). 
+I've played a bit with [Rust](http://www.rust-lang.org) and with Cargo. A cool feature of the compiler is the test run. You can write tests functions within your program with the test macro, and they will not be executed during a standart run (``cargo run``), but only with a 'test run'(``cargo test``).
 I found this pretty cool, and then tried to do kind of the same in Python.
