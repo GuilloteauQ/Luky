@@ -2,7 +2,9 @@
 import sys
 import time
 from subprocess import call
+
 class Test:
+
     def __init__(self, function, name, show_time, show_color):
         self.function = function
         self.name = name
@@ -40,27 +42,44 @@ def write_header(outfile):
     outfile.write("#!/usr/bin/env python3\n")
     outfile.write("import luky, sys, os\n")
 
-def write_test_file(path, outfile, show_time, hide_color):
-    functions_names = get_test_functions_names(path)
+def write_import_path(path, outfile):
     if '/' in path:
         directories = path[:-3].split('/')[:-1]
         imported_path = ','.join(["'{}'".format(directory) for directory in directories])
         import_line = "sys.path.append(os.path.join(os.path.dirname(__file__), {}))\n".format(imported_path)
         outfile.write(import_line)
-    line = "from {} import ".format(path[:-3].split('/')[-1])
+        return path[:-3].split('/')[-1]
+    return path[:-3]
+
+
+def write_test_file(path, outfile, show_time, hide_color):
+    functions_names = get_test_functions_names(path)
+    imported_file_name = write_import_path(path, outfile)
+    line = "from {} import ".format(imported_file_name)
     size = len(functions_names)
     if size > 0:
         for i in range(size - 1):
             line += "{}, ".format(functions_names[i])
         line += "{}\n".format(functions_names[size - 1])
         outfile.write(line)
+
         outfile.write("tests_passed = 0\n")
         for function in functions_names:
-            outfile.write("tests_passed += luky.Test({0}, \"{0}\", {1}, {2}).report()\n" 
+            outfile.write("tests_passed += luky.Test({0}, \"{0}\", {1}, {2}).report()\n"
                           .format(function, show_time, not hide_color))
         outfile.write("print(\"Tests passed:\", tests_passed, \"/ {}\")\n".format(size))
 
 def get_name(line):
+    """
+    Return the name of the function
+    that is defined in the line
+
+    Every function that we are getting the name
+    do not have argument.
+    This is why to take for 4 to -4
+        4: for the 'def '
+        -4: for the '():'
+    """
     return line[4:-4]
 
 def get_test_functions_names(path):
